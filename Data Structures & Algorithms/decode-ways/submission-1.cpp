@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    int solve(int index, string s, vector<int>& dp)
+    {
+        if(index==s.size())
+        {
+            return 1;
+        }
+        if(s[index]=='0')
+        {
+            return 0;
+        }
+        if(dp[index]!=-1) return dp[index];
+        int num = 0, count=0;
+        count = solve(index+1, s, dp);
+        
+        if(index+1<s.size())
+        {
+            num = (s[index]-'0')*10 + (s[index+1]-'0');
+
+            if(num>=10 && num<=26)
+            {
+                count += solve(index+2, s, dp);
+            }
+        }
+
+        return dp[index] = count;
+    }
+
+
+    int numDecodings(string s) {
+        int n = s.size();
+        vector<int> dp(n, -1);
+        return solve(0, s, dp);
+    }
+};
